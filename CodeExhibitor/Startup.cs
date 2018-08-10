@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using CodeExhibitor.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CodeExhibitor.Models;
 
 namespace CodeExhibitor
 {
@@ -41,6 +42,10 @@ namespace CodeExhibitor
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<AlgorithmContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DevelopmentConnection")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

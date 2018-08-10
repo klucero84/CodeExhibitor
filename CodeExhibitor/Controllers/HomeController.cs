@@ -5,19 +5,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CodeExhibitor.Models;
+using CodeExhibitor.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeExhibitor.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AlgorithmContext _algorithmContext;
+
+        public HomeController(AlgorithmContext context)
+        {
+            _algorithmContext = context;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About(int? id)
         {
-            ViewData["Message"] = "Your application description page.";
+            if (id == null) {
+                return View();
+                //Exception e = new Exception("No id given to about");
+            }
+
+            Algorithm algorithm = await _algorithmContext.Algorithms.FirstOrDefaultAsync<Algorithm>(a => a.AlgorithmId == id);
+            ViewData["Description"] = algorithm.Description;
+            ViewData["Code"] = algorithm.Code;
+            ViewData["Objective"] = algorithm.Objective;
+            ViewData["BigO"] = algorithm.BigONotation;
+            //ViewData["Message"] = "Your application description page.";
 
             return View();
         }
