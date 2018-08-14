@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AlgorithmsLib.Sorting;
 
 namespace CodeExhibitor.Controllers
 {
@@ -33,7 +34,8 @@ namespace CodeExhibitor.Controllers
         public async Task<IActionResult> Show(int id)
         {
             Algorithm result = await _algorithmContext.Algorithms.FirstOrDefaultAsync<Algorithm>(a => a.AlgorithmId == id);
-
+            
+            
             return View();
         }
 
@@ -41,6 +43,7 @@ namespace CodeExhibitor.Controllers
         private IEnumerable<SelectListItem> GetSelectListItems(List<Algorithm> algorithms)
         {
             var selectList = new List<SelectListItem>();
+
 
             foreach (var algorithm in algorithms)
             {
