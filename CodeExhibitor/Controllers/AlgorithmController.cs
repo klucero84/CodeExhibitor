@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AlgorithmsLib.Sorting;
 
 namespace CodeExhibitor.Controllers
 {
@@ -21,10 +20,10 @@ namespace CodeExhibitor.Controllers
         }
 
         public IActionResult Index()
-        { 
-            //get all our algorithms
+        {
+            // get all our algorithms
             var results = _algorithmContext.Algorithms.ToList();
-            //populate our names selectlistitem collection in a new model
+            // populate our names selectlistitem collection in a new model
             var model = new Algorithm();
 
             ViewData["NameList"] = GetSelectListItems(results);
